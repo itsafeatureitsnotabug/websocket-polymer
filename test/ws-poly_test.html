@@ -1,0 +1,123 @@
+<!doctype html>
+
+<html>
+  <head>
+    <title>ws-poly test</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../ws-poly.html">
+  </head>
+  <body>
+
+    <test-fixture id="basic">
+      <template>
+        <ws-poly></ws-poly>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('Basic ws-poly tester !', function() {
+        var element;
+        setup(function() {
+          // get fresh instance of fixture before every test
+          element = fixture('basic');
+        });
+
+        test('instantiating the element works', function() {
+          assert.equal(element.is, 'ws-poly');
+        });
+      });
+
+      // PING : WS stays Off : Comment out this suite if WS server is ON.
+      suite('Testing chat behavior WITHOUT successful websocket connection', function() {
+        var element
+        setup(function() {
+          // get fresh instance of fixture before every test
+          element = fixture('basic');
+        });
+
+        test('text box is empty when page loads.', function() {
+          assert.equal(message.textContent, '');
+        });
+
+        test('text box shows correct messages with failed sendMessage request ', function() {
+          element.sendMessage()
+          assert.equal(message.textContent, 'WARNING : No Active Socket Connection Detected !\n');
+        });
+
+        test('text box shows correct messages with failed disconnectSocket request ', function() {
+          element.disconnectSocket();
+          assert.equal(message.textContent, 'WARNING : No Active Socket Connection Detected !\n');
+        });
+
+        test('text box shows correct messages with failed connectSocket request ', function() {
+          element.connectSocket();
+          element.connectSocket();
+
+          // FIXME : This is a bug. There is no active websocket connection then why is this message seen in text box.
+          assert.equal(message.textContent, 'Websocket already active brah !\n');
+        });
+
+        test('message box resets after 20 messages', function() {
+          for (var i=0 ; i<20 ; i++) {
+            element.updateTextBox('message number : ' + i );
+          }
+          assert.equal(message.textContent, 'message number : 19\n');
+        });
+
+        test('message box adds new message to the top of the box', function() {
+          element.updateTextBox('old message');
+          element.updateTextBox('new message');
+          
+          assert.equal(message.textContent, 'new message\nold message\n');
+          assert.notEqual(message.textContent, 'old message\new message\n');
+        });
+      });
+
+      // PONG : WS Turns ON : Comment out this suite if WS server is OFF.
+      suite('Testing chat behavior WITH successful websocket connection', function() {
+        var element
+        setup(function() {
+          // get fresh instance of fixture before every test
+          element = fixture('basic');
+        });
+
+        test('text box is empty when page loads.', function() {
+          assert.equal(message.textContent, '');
+        });
+
+        test('text box shows correct message when websocket connects successfully.', function(done) {
+          assert.equal(message.textContent, '');
+          element.connectSocket();
+
+          expect(setTimeout(function(){
+            expect(message.textContent).to.be.equal(' Socket Connected ! \n');
+            return done();
+          }, 1000)).to.not.throw;
+        });
+
+        test('text box shows correct message user sends chat message.', function(done) {
+          var elem = element;
+          assert.equal(message.textContent, '');
+          
+          setTimeout(function(){
+            sendChat();
+          }, 1000);
+
+          function sendChat(){
+            document.getElementById('chat-msg').value = 'Test Client Message !'
+            elem.sendMessage();
+            expect(message.textContent).to.contain('Client Says: Message :Test Client Message ! | Sent at :');
+            done();
+          }
+
+        });
+
+      });
+
+    </script>
+  </body>
+</html>
