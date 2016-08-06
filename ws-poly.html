@@ -29,7 +29,7 @@
       <!-- Status: <span id="status"></span><br /> -->
       
       <button id="open" on-click="connectSocket">Connect</button>
-      &nbsp;&nbsp;URL: <input id="websocket-url" type="text" value="localhost:8000" />
+      &nbsp;&nbsp;URL: <input id="websocket-url" type="text" placeholder="localhost:8000" value="guarded-shelf-55712.herokuapp.com"/>
 
       <br/>
       <br/>
@@ -156,15 +156,14 @@
         console.log("Arrived at connectSocket.");
 
         if (_socketId != null) {
-          // FIXME : Error seen with multiple unsuccessful 'connect' attempts
-          that.updateTextBox("Websocket already active !");
+          that.updateTextBox("Websocket already active brah !");
           return ;
         }
         
         if(window.location.protocol == "https:") {
           protocol = "wss://";
         }
-        let urlValue = protocol + document.getElementById("websocket-url").getAttribute("value") + "/";
+        let urlValue = protocol + document.getElementById('websocket-url').value + "/";
         store.dispatch(
           that.wsMessageActions.connectWs(_socketId, urlValue)
           )
@@ -180,7 +179,7 @@
 
         // Display any errors that occur
         _socketId.addEventListener("error", function(event) {
-          // that.updateTextBox(" Socket ERRORRRRRR ");
+          that.updateTextBox(" Socket ERRORRRRRR ");
         });
 
         _socketId.addEventListener("close", function(event) {
@@ -214,7 +213,7 @@
           return;
         }
 
-        let chatMessage = document.getElementById('chat-msg').value
+        let chatMessage = document.getElementById('chat-msg').value;
         let socketPayload = "Message :" + chatMessage +  " | Sent at :" + Date.now().toString();
         
         store.dispatch(
