@@ -9,25 +9,19 @@
         margin-top: 5px;
         margin-left: 1px;
       }
-
       input {
         width: auto;
         margin: 3px;
         padding: 2px;
       }
-
       textarea {
-        width: 85%;
+        width: 75%;
         height: 280px;
         font-family: Consolas, fixed;
       }
-
     </style>
-    <h2>Native Websocket Elem </h2>
-
-    <div>
-      <!-- Status: <span id="status"></span><br /> -->
-      
+    <h2>Native Websocket Polymer Element </h2>
+    <div>      
       <button id="open" on-click="connectSocket">Connect</button>
       &nbsp;&nbsp;URL: <input id="websocket-url" type="text" placeholder="localhost:8000" value="guarded-shelf-55712.herokuapp.com"/>
 
@@ -41,7 +35,6 @@
       <br/>
       <textarea class="socketMessage" id="message"></textarea>
     </div>
-
   </template>
 
   <script>
