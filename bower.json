@@ -8,9 +8,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/PolymerElements/iron-behaviors.git"
+    "url": ""
   },
-  "main": "ws-poly.html",
+  "main": [
+    "ws-poly.html"
+    
+  ],
+  "license": "",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
     "redux": "https://cdnjs.cloudflare.com/ajax/libs/redux/1.0.1/redux.js",
@@ -21,5 +25,6 @@
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
     "web-component-tester": "^4.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
-  }
+  },
+  "ignore": []
 }

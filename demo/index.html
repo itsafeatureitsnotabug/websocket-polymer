@@ -1,29 +1,26 @@
 <!doctype html>
 <html>
-  <head>
-    <title>ws-poly demo</title>
+
+<head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
-    
-    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../bower_components/iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../bower_components/iron-demo-helpers/demo-snippet.html">
-
+    <title>ws-poly demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link href="../../paper-styles/demo-pages.html" rel="import">
     <link rel="import" href="../ws-poly.html">
-
-    <style is="custom-style" include="demo-pages-shared-styles">
+    <style>
+    .vertical-section {
+        text-align: center;
+    }
     </style>
-  </head>
-  <body>
+</head>
 
-    <div class="vertical-section-container centered">
-      <h3>Basic ws-poly Demo</h3>
-      <demo-snippet>
-        <template>
-          <ws-poly></ws-poly>
-        </template>
-      </demo-snippet>
+<body>
+    <div class="vertical-section vertical-section-container centered">
+        <h3>Basic ws-poly Demo</h3>
+        <ws-poly></ws-poly>
     </div>
+</body>
 
-  </body>
 </html>
