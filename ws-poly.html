@@ -100,8 +100,12 @@
               break;
 
             case 'CONNECT_WS':
-                return {
-                wsId   : new WebSocket(action.wsUrl),
+              let newSocket = new WebSocket(action.wsUrl);
+              if (newSocket.readyState === 3) {
+                newSocket = null;
+              }
+              return {
+                wsId   : newSocket,
                 wsUrl  : action.wsUrl,
                 wsMsg  : ''
               }
@@ -172,13 +176,20 @@
 
         // Display any errors that occur
         _socketId.addEventListener("error", function(event) {
+          if(_socketId != null ) {
+            store.dispatch(
+            that.wsMessageActions.disconnectWs(_socketId)
+            )
+          }
           that.updateTextBox(" Socket ERRORRRRRR ");
         });
 
         _socketId.addEventListener("close", function(event) {
-          store.dispatch(
+          if(_socketId != null ) {
+            store.dispatch(
             that.wsMessageActions.disconnectWs(_socketId)
-          )
+            )
+          }
           that.updateTextBox(" Socket CLOSED !!!!!!!! ");
         });
       }

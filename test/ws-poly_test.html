@@ -31,12 +31,12 @@
         });
       });
 
-      // PING : WS stays Off : Comment out this suite if WS server is ON.
       suite('Testing chat behavior WITHOUT successful websocket connection', function() {
         var element
         setup(function() {
           // get fresh instance of fixture before every test
           element = fixture('basic');
+          document.getElementById('websocket-url').value = 'localhost:1234'
         });
 
         test('text box is empty when page loads.', function() {
@@ -53,12 +53,16 @@
           assert.equal(message.textContent, 'WARNING : No Active Socket Connection Detected !\n');
         });
 
-        test('text box shows correct messages with failed connectSocket request ', function() {
+        test('text box shows correct messages with failed connectSocket request ', function(done) {
           element.connectSocket();
-          element.connectSocket();
+          
+          setTimeout(function(){
+            expect(message.textContent).to.contain('Socket CLOSED !!!!!!!!');
+            expect(message.textContent).to.contain('Socket ERRORRRRRR');
+            expect(message.textContent).to.contain('Connecting...');
+            return done();
+          }, 2000);
 
-          // FIXME : This is a bug. There is no active websocket connection then why is this message seen in text box.
-          assert.equal(message.textContent, 'Websocket already active brah !\n');
         });
 
         test('message box resets after 20 messages', function() {
@@ -77,7 +81,6 @@
         });
       });
 
-      // PONG : WS Turns ON : Comment out this suite if WS server is OFF.
       suite('Testing chat behavior WITH successful websocket connection', function() {
         var element
         setup(function() {
@@ -92,30 +95,29 @@
         test('text box shows correct message when websocket connects successfully.', function(done) {
           assert.equal(message.textContent, '');
           element.connectSocket();
-
           expect(setTimeout(function(){
-            expect(message.textContent).to.be.equal(' Socket Connected ! \n');
+            expect(message.textContent).to.contain(' Socket Connected ! \n');
             return done();
-          }, 1000)).to.not.throw;
+          }, 3000)).to.not.throw;
         });
 
         test('text box shows correct message user sends chat message.', function(done) {
           var elem = element;
           assert.equal(message.textContent, '');
-          
+
+          document.getElementById('chat-msg').value = 'Test Client Message !'
+          elem.sendMessage();
           setTimeout(function(){
             sendChat();
-          }, 1000);
+          }, 3000);
 
           function sendChat(){
-            document.getElementById('chat-msg').value = 'Test Client Message !'
-            elem.sendMessage();
             expect(message.textContent).to.contain('Client Says: Message :Test Client Message ! | Sent at :');
+            expect(message.textContent).to.contain('WS Server Says: Message :Test Client Message ! | Sent at ');
+            elem.disconnectSocket();
             done();
           }
-
         });
-
       });
 
     </script>
