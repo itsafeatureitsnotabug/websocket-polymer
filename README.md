@@ -21,7 +21,9 @@ Make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) 
 ### Installing Other Dependencies
 Navigate to '/test/Websocket-Server-Test' and install all necessary modules by issuing command.
 ```
+$ npm install 
 $ bower install
+$ gulp crisp
 ```
 
 
@@ -76,4 +78,18 @@ http://japhr.blogspot.com/2015/04/the-debugger-and-breakpoints-with-web.html
 4. Google code labs : 
 https://codelabs.developers.google.com/codelabs/polymer-es2015/index.html?index=..%2F..%2Findex#0
 
+
+## Usage 
+Add the component using bower : 
+'''
+$ bower install --save https://github.com/itsafeatureitsnotabug/websocket-polymer.git
+'''
+
+Import and use component in your markup :
+'''
+<link rel="import" href="../v-ws-poly.html">
+...
+<ws-poly></ws-poly>
+...
+'''
 
