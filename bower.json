@@ -1,5 +1,15 @@
 {
   "name": "ws-poly",
+  "version": "0.0.1",
+  "description": "Provides a simple chat component.",
+  "private": true,
+  "authors": [
+    "Its A Feature"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PolymerElements/iron-behaviors.git"
+  },
   "main": "ws-poly.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",

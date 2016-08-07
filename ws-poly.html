@@ -1,6 +1,6 @@
-<link rel="import" href="./bower_components/polymer/polymer.html">
-<script src="./bower_components/redux/index.js"></script>
-<script src="./bower_components/immutable/dist/immutable.js"></script>
+<link rel="import" href="./polymer/polymer.html">
+<script src="./redux/index.js"></script>
+<script src="./immutable/dist/immutable.js"></script>
 
 <dom-module id="ws-poly">
   <template>
@@ -146,7 +146,7 @@
       connectSocket() {
         let that = this;
         let protocol = "ws://";
-        console.log("Arrived at connectSocket.");
+        that.updateTextBox("Connecting...");
 
         if (_socketId != null) {
           that.updateTextBox("Websocket already active brah !");
